@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.shape.Polyline?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="692.0" styleClass="main-background" stylesheets="@../../../css/BackGround.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.first.MainPage">
+   <bottom>
+      <AnchorPane maxHeight="109.0" maxWidth="117.0" minHeight="109.0" minWidth="117.0" prefHeight="109.0" prefWidth="117.0" style="-fx-background-color: #c19e6a; -fx-background-radius: 20 20 0 0; -fx-border-color: gray; -fx-border-radius: 17 17 0 0; -fx-border-width: 1 1 0 1; -fx-border-width: 2 2 0 2;" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets left="550.0" right="30.0" />
+         </BorderPane.margin>
+         <children>
+            <ImageView fx:id="characterIcon" fitHeight="103.0" fitWidth="127.0" layoutX="14.0" layoutY="3.0" onMouseClicked="#characterClicked" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../css/character.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
+         <children>
+            <Polyline fx:id="battleGround" fill="CHARTREUSE" layoutX="181.0" layoutY="171.0" onMouseClicked="#battleGroundClicked" points="467.7999267578125, 219.39999389648438, 163.00003051757812, 441.800048828125, -129.0, 219.39999389648438, 171.00003051757812, -3.0" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
