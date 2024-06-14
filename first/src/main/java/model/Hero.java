@@ -12,13 +12,14 @@ import java.util.List;
 public class Hero implements Runnable {
     private double speed;
     private String name;
-    private static ArrayList<String> imageAddresses = new ArrayList<>(List.of("src/main/resources/photo/css/character.png"));
+    private ArrayList<String> imageAddresses = new ArrayList<>();
     private double destructionPower;
 
     public Hero() {
         this.speed = 50;
         this.name = "Warrior";
         this.destructionPower = 100;
+        imageAddresses.add("/css/character.png");
     }
 
     @Override

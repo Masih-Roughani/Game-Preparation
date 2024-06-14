@@ -2,27 +2,22 @@ package org.example.first;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.effect.Bloom;
-import javafx.scene.effect.Effect;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Rectangle;
 import model.Hero;
 
 import java.net.URL;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainPage implements Initializable {
+
+    private int counter = 0;
 
     @FXML
     private Polyline battleGround;
@@ -35,13 +30,36 @@ public class MainPage implements Initializable {
 
     @FXML
     void battleGroundClicked(MouseEvent event) {
-        String path = Objects.requireNonNull(getClass().getResource("/css/character.png")).toExternalForm();
-        ImageView imageView = new ImageView(new Image(path));
-        imageView.setFitWidth(25);
-        imageView.setFitHeight(25);
-        imageView.setLayoutX(event.getSceneX());
-        imageView.setLayoutY(event.getSceneY());
-        anchorPane.getChildren().add(imageView);
+        if (counter == 10) {
+            showLimitAlert();
+        } else if (characterIcon.getEffect() != null) {
+            String path = Objects.requireNonNull(getClass().getResource(new Hero().getImageAddresses().getFirst())).toExternalForm();
+            ImageView imageView = new ImageView(new Image(path));
+            imageView.setFitWidth(25);
+            imageView.setFitHeight(25);
+            imageView.setLayoutX(event.getSceneX());
+            imageView.setLayoutY(event.getSceneY());
+            anchorPane.getChildren().add(imageView);
+            counter++;
+        } else {
+            showForceAlert();
+        }
+    }
+
+    public void showLimitAlert() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("There might be a problem!");
+        alert.setTitle("Deployment Error!");
+        alert.setContentText("You have deployed the maximum number of soldiers!");
+        alert.showAndWait();
+    }
+
+    public void showForceAlert() {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("There might be a problem!");
+        alert.setTitle("Deployment Error!");
+        alert.setContentText("Please check if you have chosen the force that you want to use during the battle!");
+        alert.showAndWait();
     }
 
     @FXML
