@@ -17,6 +17,8 @@ import java.util.ResourceBundle;
 
 public class MainPage implements Initializable {
 
+    private final String buildingPath = "/css/warrior1.png";
+
     private int counter = 0;
 
     @FXML
@@ -30,13 +32,15 @@ public class MainPage implements Initializable {
 
     @FXML
     void battleGroundClicked(MouseEvent event) {
+        System.out.println(event.getSceneX());
+        System.out.println(event.getSceneY());
         if (counter == 10) {
             showLimitAlert();
         } else if (characterIcon.getEffect() != null) {
-            String path = Objects.requireNonNull(getClass().getResource(new Hero().getImageAddresses().getFirst())).toExternalForm();
-            ImageView imageView = new ImageView(new Image(path));
+            String warriorPath = Objects.requireNonNull(getClass().getResource(new Hero().getImageAddresses().getFirst())).toExternalForm();
+            ImageView imageView = new ImageView(new Image(warriorPath));
             imageView.setFitWidth(25);
-            imageView.setFitHeight(25);
+            imageView.setFitHeight(30);
             imageView.setLayoutX(event.getSceneX());
             imageView.setLayoutY(event.getSceneY());
             anchorPane.getChildren().add(imageView);
