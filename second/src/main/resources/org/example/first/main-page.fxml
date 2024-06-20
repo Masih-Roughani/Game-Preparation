@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.Bloom?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Polyline?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="692.0" prefWidth="692.0" styleClass="main-background" stylesheets="@../../../css/BackGround.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.first.MainPage">
    <bottom>
@@ -26,16 +32,59 @@
       <AnchorPane fx:id="anchorPane" BorderPane.alignment="CENTER">
          <children>
             <Polyline fx:id="battleGround" fill="CHARTREUSE" layoutX="184.0" layoutY="158.0" onMouseClicked="#battleGroundClicked" points="469.5999755859375, 230.0, 164.00003051757812, 454.79998779296875, -131.19998168945312, 230.0, 170.39999389648438, 7.600006103515625" strokeType="INSIDE" />
-            <ImageView fitHeight="110.0" fitWidth="130.0" layoutX="134.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="firstBuilding" fitHeight="110.0" fitWidth="130.0" layoutX="134.0" layoutY="355.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../css/building.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="110.0" fitWidth="130.0" layoutX="308.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="secondBuilding" fitHeight="110.0" fitWidth="130.0" layoutX="308.0" layoutY="153.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../css/building.png" />
                </image>
             </ImageView>
+            <AnchorPane layoutX="590.0" layoutY="14.0" prefHeight="67.0" prefWidth="102.0" styleClass="start-stage">
+               <children>
+                  <Label fx:id="startButton" layoutX="11.0" layoutY="14.0" onMouseClicked="#startButtonClicked" text="START">
+                     <font>
+                        <Font name="System Bold Italic" size="26.0" />
+                     </font>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <textFill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop>
+                                 <color>
+                                    <Color red="0.38149771094322205" green="0.10506822913885117" blue="0.5789473652839661" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.35964941076059476">
+                                 <color>
+                                    <Color red="0.6086666584014893" green="0.262105256319046" blue="0.8736842274665833" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.497560975609756">
+                                 <color>
+                                    <Color red="0.43513190746307373" green="0.20576998591423035" blue="0.6105263233184814" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="0.7585365853658537">
+                                 <color>
+                                    <Color red="0.4997271001338959" green="0.2584795355796814" blue="0.6842105388641357" />
+                                 </color>
+                              </Stop>
+                              <Stop offset="1.0">
+                                 <color>
+                                    <Color red="0.6420468091964722" green="0.1508771926164627" blue="0.9473684430122375" />
+                                 </color>
+                              </Stop>
+                           </stops>
+                        </LinearGradient>
+                     </textFill>
+                  </Label>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </center>

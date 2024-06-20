@@ -9,3 +9,11 @@
     -fx-border-radius: 17 17 0 0;
     -fx-border-width: 2 2 0 2;
 }
+
+.start-stage {
+    -fx-background-color: #c19e6a;
+    -fx-background-radius: 0 0 0 20;
+    -fx-border-color: gray;
+    -fx-border-radius: 0 0 0 17;
+    -fx-border-width: 0 0 2 2;
+}

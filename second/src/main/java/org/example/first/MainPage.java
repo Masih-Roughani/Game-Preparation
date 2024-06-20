@@ -1,8 +1,10 @@
 package org.example.first;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
 import javafx.scene.effect.Bloom;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,14 +14,23 @@ import javafx.scene.shape.Polyline;
 import model.Hero;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class MainPage implements Initializable {
-
+    private ArrayList<Hero> heroes = new ArrayList<>();
     private final String buildingPath = "/css/warrior1.png";
-
     private int counter = 0;
+
+    @FXML
+    private ImageView firstBuilding;
+
+    @FXML
+    private Label startButton;
+
+    @FXML
+    private ImageView secondBuilding;
 
     @FXML
     private Polyline battleGround;
@@ -31,16 +42,27 @@ public class MainPage implements Initializable {
     private AnchorPane anchorPane;
 
     @FXML
+    void startButtonClicked(MouseEvent event) {
+        for (Hero hero : heroes) {
+            new Thread(() -> {
+                Platform.runLater(hero::run);
+            }).start();
+            new Thread(() -> {
+
+            }).start();
+        }
+    }
+
+    @FXML
     void battleGroundClicked(MouseEvent event) {
-        System.out.println(event.getSceneX());
-        System.out.println(event.getSceneY());
         if (counter == 10) {
             showLimitAlert();
         } else if (characterIcon.getEffect() != null) {
-            String warriorPath = Objects.requireNonNull(getClass().getResource(new Hero().getImageAddresses().getFirst())).toExternalForm();
-            ImageView imageView = new ImageView(new Image(warriorPath));
-            imageView.setFitWidth(25);
-            imageView.setFitHeight(30);
+            heroes.add(new Hero());
+            ;
+            ImageView imageView = heroes.getLast().getWarriorImageView();
+            imageView.setFitWidth(45);
+            imageView.setFitHeight(65);
             imageView.setLayoutX(event.getSceneX());
             imageView.setLayoutY(event.getSceneY());
             anchorPane.getChildren().add(imageView);
