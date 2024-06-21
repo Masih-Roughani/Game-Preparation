@@ -1,9 +1,12 @@
 package model;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.scene.Group;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.util.Duration;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,6 +21,7 @@ public class Hero implements Runnable {
     private ArrayList<String> imageAddresses = new ArrayList<>();
     private double destructionPower;
     private ImageView warriorImageView;
+    private boolean value = true;
 
     public Hero() {
         this.speed = 50;
@@ -29,25 +33,20 @@ public class Hero implements Runnable {
         warriorImageView = new ImageView(new Image(warriorPath));
     }
 
-    @Override
     public void run() {
-        new Thread(() -> {
-            while (true) {
-                try {
-                    Thread.sleep(1000);
-                    if (warriorImageView.getImage().getUrl().endsWith("warrior1.png")) {
-                        Platform.runLater(() -> {
-                            warriorImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource(imageAddresses.get(1))).toExternalForm()));
-                        });
-                    } else {
-                        Platform.runLater(() -> {
-                            warriorImageView.setImage(new Image(Objects.requireNonNull(getClass().getResource(imageAddresses.getFirst())).toExternalForm()));
-                        });
-                    }
-                } catch (InterruptedException e) {
-                    System.out.println(e.getMessage());
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> {
+            if (value) {
+                String currentImageUrl = warriorImageView.getImage().getUrl();
+                String newImageUrl;
+                if (currentImageUrl.endsWith("warrior1.png")) {
+                    newImageUrl = Objects.requireNonNull(getClass().getResource(imageAddresses.get(1))).toExternalForm();
+                } else {
+                    newImageUrl = Objects.requireNonNull(getClass().getResource(imageAddresses.getFirst())).toExternalForm();
                 }
+                warriorImageView.setImage(new Image(newImageUrl));
             }
-        }).start();
+        }));
+        timeline.setCycleCount(Timeline.INDEFINITE);
+        timeline.play();
     }
 }

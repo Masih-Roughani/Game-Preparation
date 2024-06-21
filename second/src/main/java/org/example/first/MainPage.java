@@ -1,5 +1,8 @@
 package org.example.first;
 
+import javafx.animation.Animation;
+import javafx.animation.Transition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,16 +14,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Polyline;
+import javafx.scene.transform.Translate;
+import javafx.util.Duration;
+import lombok.Synchronized;
 import model.Hero;
 
+import java.lang.reflect.Type;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.jar.Manifest;
 
 public class MainPage implements Initializable {
     private ArrayList<Hero> heroes = new ArrayList<>();
-    private final String buildingPath = "/css/warrior1.png";
     private int counter = 0;
 
     @FXML
@@ -43,14 +51,54 @@ public class MainPage implements Initializable {
 
     @FXML
     void startButtonClicked(MouseEvent event) {
-        for (Hero hero : heroes) {
+        new Thread(() -> {
+            for (Hero hero : heroes) {
+                new Thread(() -> {
+                    Platform.runLater(hero);
+                    transition(firstBuilding, hero);
+                }).start();
+            }
+            sleepThread(6000);
+            setValueFalse();
+            sleepThread(5000);
             new Thread(() -> {
-                Platform.runLater(hero::run);
+                for (Hero hero : heroes) {
+                    transition(secondBuilding, hero);
+                }
             }).start();
-            new Thread(() -> {
+            sleepThread(6000);
+            setValueFalse();
+            sleepThread(5000);
+        }).start();
+    }
 
-            }).start();
+    public void setValueFalse(){
+        new Thread(() -> {
+            for (Hero hero : heroes) {
+                Platform.runLater(() -> {
+                    hero.setValue(false);
+                });
+            }
+        }).start();
+    }
+
+    public void sleepThread(int duration) {
+        try {
+            Thread.sleep(duration);
+        } catch (InterruptedException e) {
+            System.out.println(e.getMessage());
         }
+    }
+
+    public void transition(ImageView building, Hero hero) {
+        Platform.runLater(() -> {
+            hero.setValue(true);
+            TranslateTransition transition = new TranslateTransition(Duration.millis(6000));
+            transition.setNode(hero.getWarriorImageView());
+            transition.setToX(building.getLayoutX() + 65 - hero.getWarriorImageView().getLayoutX());
+            transition.setToY(building.getLayoutY() + 65 - hero.getWarriorImageView().getLayoutY());
+            transition.playFromStart();
+        });
     }
 
     @FXML
@@ -59,10 +107,9 @@ public class MainPage implements Initializable {
             showLimitAlert();
         } else if (characterIcon.getEffect() != null) {
             heroes.add(new Hero());
-            ;
             ImageView imageView = heroes.getLast().getWarriorImageView();
-            imageView.setFitWidth(45);
-            imageView.setFitHeight(65);
+            imageView.setFitWidth(25);
+            imageView.setFitHeight(37);
             imageView.setLayoutX(event.getSceneX());
             imageView.setLayoutY(event.getSceneY());
             anchorPane.getChildren().add(imageView);
