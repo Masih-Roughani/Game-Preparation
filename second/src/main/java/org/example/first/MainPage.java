@@ -29,6 +29,7 @@ import java.util.jar.Manifest;
 
 public class MainPage implements Initializable {
     private ArrayList<Hero> heroes = new ArrayList<>();
+    private ArrayList<ImageView> images = new ArrayList<>();
     private int counter = 0;
 
     @FXML
@@ -69,10 +70,21 @@ public class MainPage implements Initializable {
             sleepThread(6000);
             setValueFalse();
             sleepThread(5000);
+            deleteHeroes();
         }).start();
     }
 
-    public void setValueFalse(){
+    public void deleteHeroes() {
+        new Thread(() -> {
+            for (ImageView imageView : images) {
+                Platform.runLater(() -> {
+                    imageView.setImage(null);
+                });
+            }
+        }).start();
+    }
+
+    public void setValueFalse() {
         new Thread(() -> {
             for (Hero hero : heroes) {
                 Platform.runLater(() -> {
@@ -112,6 +124,7 @@ public class MainPage implements Initializable {
             imageView.setFitHeight(37);
             imageView.setLayoutX(event.getSceneX());
             imageView.setLayoutY(event.getSceneY());
+            images.add(imageView);
             anchorPane.getChildren().add(imageView);
             counter++;
         } else {
